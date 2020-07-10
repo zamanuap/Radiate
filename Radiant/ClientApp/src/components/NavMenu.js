@@ -1,40 +1,32 @@
-import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import './NavMenu.css';
+import React, { useState, useContext } from 'react'
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap'
+import { Link } from 'react-router-dom'
+import About from './About/About'
+import './NavMenu.css'
+import { AppContext } from './ContextProvider'
 
-export class NavMenu extends Component {
-  static displayName = NavMenu.name;
+const NavMenu = () => {
 
-  constructor (props) {
-    super(props);
-
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
+    const { user } = useContext(AppContext)
+  const [collapsed, setCollapsed] = useState(true)
+  
+  const toggleNavbar = () => {
+      setCollapsed(!collapsed)
   }
 
-  toggleNavbar () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
-
-  render () {
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
             <Container>
                     <NavbarBrand tag={Link} to="/" className="btn-donate">Radiate Love Foundation</NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
+            <NavbarToggler onClick={toggleNavbar} className="mr-2" />
+            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/about">About</NavLink>
+                  <NavLink ><About /></NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/projects">Projects</NavLink>
@@ -48,9 +40,16 @@ export class NavMenu extends Component {
                 <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/contact-us">Contact Us</NavLink>
                 </NavItem>
-                <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/login">Log In</NavLink>
-                </NavItem>
+                {
+                user.isLogged ?
+                    <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/volunteer">Volunteer</NavLink>
+                    </NavItem>
+                    : 
+                    <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/login">Log In</NavLink>
+                    </NavItem>
+                }
                 { /*   
                 <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/donate">
@@ -64,5 +63,6 @@ export class NavMenu extends Component {
         </Navbar>
       </header>
     );
-  }
 }
+
+export default NavMenu

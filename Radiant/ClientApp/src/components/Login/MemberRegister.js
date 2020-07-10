@@ -1,14 +1,13 @@
 ﻿import React from 'react'
 import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-const Register = (props) => {
+const MemberRegister = (props) => {
     return (
         <div className="container">
             <div className="row">
                 <div className="col-2"></div>
                 <div className="col-8">
-                    <h4>Volunteer Registration Form</h4>
-                    <p style={{color: "blue"}}>For member registration contact with a volunteer</p>
+                    <h4>Member Registration Form</h4>
                 </div>
             </div>
             <div className="row">
@@ -101,4 +100,4 @@ const Register = (props) => {
     );
 }
 
-export default Register
+export default MemberRegister
